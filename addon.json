@@ -1,0 +1,13 @@
+{
+    "ignore": [
+        "LICENSE",
+        ".git/**",
+		"icon.*"
+    ],
+    "tags": [
+        "fun"
+    ],
+    "title": "ppp",
+    "type": "vehicle",
+    "workshopid": 950845673
+}
