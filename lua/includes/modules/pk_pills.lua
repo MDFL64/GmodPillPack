@@ -1175,5 +1175,7 @@ include("ppp_includes/tf2lib.lua")
 include("ppp_includes/console.lua")
 include("ppp_includes/join_prompt.lua")
 include("ppp_includes/restricted.lua")
+
+include("ppp_includes/locomotion.lua")
 -- DONE!
 print("PILL CORE LOADED")
