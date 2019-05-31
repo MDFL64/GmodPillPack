@@ -20,6 +20,9 @@ function ENT:Initialize()
 
         return
     end
+	if self.formTable.init then
+		self.formTable.init(ply, self)
+	end
 
     local hull = self.formTable.hull or Vector(32, 32, 72)
     local duckBy = self.formTable.duckBy or (self.formTable.hull and 0 or 36)
