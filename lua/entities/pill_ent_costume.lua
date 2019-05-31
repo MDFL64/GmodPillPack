@@ -233,12 +233,14 @@ function ENT:Initialize()
         end
 
         --puppet:SetParent(self)
+		puppet:SetOwner(self)
         puppet:Spawn()
         self:DeleteOnRemove(puppet)
         self:SetPuppet(puppet)
-	if self.formTable.init then
-		self.formTable.init(ply, self)
-	end
+		
+		if self.formTable.init then
+			self.formTable.init(ply, self)
+		end
     end
 
     pk_pills.mapEnt(ply, self)
@@ -306,7 +308,7 @@ function ENT:Think()
     local puppet = self:GetPuppet()
     if not IsValid(puppet) or not IsValid(ply) then return end
     local vel = ply:GetVelocity():Length()
-
+		
     if SERVER then
         --Anims
         local anims = table.Copy(self.formTable.anims.default or {})
@@ -655,6 +657,15 @@ function ENT:Think()
                 self.wepmdl:Remove()
             end
         end
+		-- local pillent = self
+		-- local pillent_ft = self.formTable
+		-- function puppet:AcceptInput(key,activator,caller,data)
+			-- if !activator == puppet then return end
+			-- if pillent_ft.events then
+				-- pillent_ft.events(ply, pillent, key)
+			-- end
+		-- end
+		-- run this code from within pill_puppet
     else
         if self:GetPillUser() ~= LocalPlayer() or pk_pills.convars.cl_thirdperson:GetBool() then
             puppet:SetNoDraw(false)
