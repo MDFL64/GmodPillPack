@@ -236,6 +236,9 @@ function ENT:Initialize()
         puppet:Spawn()
         self:DeleteOnRemove(puppet)
         self:SetPuppet(puppet)
+	if self.formTable.init then
+		self.formTable.init(ply, self)
+	end
     end
 
     pk_pills.mapEnt(ply, self)
