@@ -16,7 +16,7 @@ function ENT:Initialize()
     local ply = self:GetPillUser()
 
     if not self.formTable or not IsValid(ply) then
-        self:Remove()
+        if SERVER then self:Remove() end
 
         return
     end
@@ -233,14 +233,9 @@ function ENT:Initialize()
         end
 
         --puppet:SetParent(self)
-		puppet:SetOwner(self)
         puppet:Spawn()
         self:DeleteOnRemove(puppet)
         self:SetPuppet(puppet)
-		
-		if self.formTable.init then
-			self.formTable.init(ply, self)
-		end
     end
 
     pk_pills.mapEnt(ply, self)
@@ -308,11 +303,11 @@ function ENT:Think()
     local puppet = self:GetPuppet()
     if not IsValid(puppet) or not IsValid(ply) then return end
     local vel = ply:GetVelocity():Length()
-		
+
     if SERVER then
         --Anims
-        local anims = table.Copy(self.formTable.anims.default or {})
-        table.Merge(anims, (IsValid(ply:GetActiveWeapon()) and self.formTable.anims[ply:GetActiveWeapon():GetHoldType()]) or (self.forceAnimSet and self.formTable.anims[self.forceAnimSet]) or {})
+        local anims = table.Copy(self.formTable.anims and self.formTable.anims.default or {})
+        table.Merge(anims, (IsValid(ply:GetActiveWeapon()) and self.formTable.anims[ply:GetActiveWeapon():GetHoldType()]) or (self.forceAnimSet and self.formTable.anims and self.formTable.anims[self.forceAnimSet]) or {})
         local anim
         --local useSeqVel=true
         local overrideRate
@@ -657,15 +652,6 @@ function ENT:Think()
                 self.wepmdl:Remove()
             end
         end
-		-- local pillent = self
-		-- local pillent_ft = self.formTable
-		-- function puppet:AcceptInput(key,activator,caller,data)
-			-- if !activator == puppet then return end
-			-- if pillent_ft.events then
-				-- pillent_ft.events(ply, pillent, key)
-			-- end
-		-- end
-		-- run this code from within pill_puppet
     else
         if self:GetPillUser() ~= LocalPlayer() or pk_pills.convars.cl_thirdperson:GetBool() then
             puppet:SetNoDraw(false)
@@ -933,17 +919,17 @@ function ENT:Draw()
     --[[local puppet = self:GetPuppet()
 	local ply = self:GetPillUser()
 	local vel=ply:GetVelocity():Length()
-	
+
 	if IsValid(puppet) then
 		puppet:SetRenderOrigin(ply:GetPos())
-		
+
 		if vel>0||math.abs(math.AngleDifference(puppet:GetAngles().y,ply:EyeAngles().y))>60 then
 			local angs=ply:EyeAngles()
 			angs.p=0
-			
+
 			puppet:SetRenderAngles(angs)
 		end
 	end
-	
+
 	puppet:DrawModel()]]
 end
