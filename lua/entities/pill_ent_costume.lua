@@ -677,7 +677,7 @@ function ENT:Think()
     if self.formTable.freelook then
         freelook = self.formTable.freelook(ply, self)
     end
-    if (vel > 0 or math.abs(math.AngleDifference(puppet:GetAngles().y, ply:EyeAngles().y)) > 60) and !freelook then
+    if (vel > 0 or math.abs(math.AngleDifference(puppet:GetAngles().y, ply:EyeAngles().y)) > 60) and not freelook then
         local angs = ply:EyeAngles()
         angs.p = 0
 
@@ -687,7 +687,7 @@ function ENT:Think()
             --puppet:SetAngles(angs)
             puppet:SetRenderAngles(angs)
         end
-    elseif vel > 0  and freelook then
+    elseif vel > 0 and freelook then
         local dirangle = ply:GetVelocity():Angle()
         dirangle.p = 0
         if SERVER then
