@@ -1,14 +1,14 @@
 {
+    "title": "Parakeet's Pill Pack",
+    "type": "vehicle",
+    "tags": [
+        "fun"
+    ],
     "ignore": [
 		"README.md",
         "LICENSE",
         ".git/**",
 		"icon.*"
     ],
-    "tags": [
-        "fun"
-    ],
-    "title": "ppp",
-    "type": "vehicle",
     "workshopid": 950845673
 }
