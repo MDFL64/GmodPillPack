@@ -302,7 +302,8 @@ function ENT:Think()
     local ply = self:GetPillUser()
     local puppet = self:GetPuppet()
     if not IsValid(puppet) or not IsValid(ply) then return end
-    local vel = ply:GetVelocity():Length()
+    local pvel = ply:GetVelocity()
+    local vel = pvel:Length()
 
     if SERVER then
         --Anims
@@ -404,11 +405,11 @@ function ENT:Think()
         if self.formTable.movePoseMode then
             --
             if self.formTable.movePoseMode == "yaw" then
-                local move_dir = puppet:WorldToLocalAngles(ply:GetVelocity():Angle())
+                local move_dir = puppet:WorldToLocalAngles(pvel:Angle())
                 puppet:SetPoseParameter("move_yaw", move_dir.y)
             elseif self.formTable.movePoseMode == "xy" then
                 if not overrideRate then
-                    local localvel = ply:WorldToLocal(ply:GetPos() + ply:GetVelocity())
+                    local localvel = ply:WorldToLocal(ply:GetPos() + pvel)
                     local maxdim = math.Max(math.abs(localvel.x), math.abs(localvel.y))
                     local clampedvel = maxdim == 0 and Vector(0, 0, 0) or localvel / maxdim
                     puppet:SetPoseParameter("move_x", clampedvel.x)
@@ -426,10 +427,10 @@ function ENT:Think()
                 end
             elseif self.formTable.movePoseMode == "xy-bot" then
                 if not overrideRate then
-                    local localvel = ply:WorldToLocal(ply:GetPos() + ply:GetVelocity())
+                    local localvel = ply:WorldToLocal(ply:GetPos() + pvel)
                     local maxdim = math.Max(math.abs(localvel.x), math.abs(localvel.y))
                     local clampedvel = maxdim == 0 and Vector(0, 0, 0) or localvel / maxdim
-                    local move_dir = puppet:WorldToLocalAngles(ply:GetVelocity():Angle())
+                    local move_dir = puppet:WorldToLocalAngles(pvel:Angle())
                     puppet:SetPoseParameter("move_x", clampedvel.x)
                     puppet:SetPoseParameter("move_y", -clampedvel.y)
                     puppet:SetPoseParameter("move_yaw", move_dir.y)
@@ -687,8 +688,8 @@ function ENT:Think()
             --puppet:SetAngles(angs)
             puppet:SetRenderAngles(angs)
         end
-    elseif vel > 0 and freelook then
-        local dirangle = ply:GetVelocity():Angle()
+    elseif Vector(pvel.x, pvel.y, 0):Length() > 10 and freelook then
+        local dirangle = pvel:Angle()
         dirangle.p = 0
         if SERVER then
             puppet:SetAngles(dirangle)
