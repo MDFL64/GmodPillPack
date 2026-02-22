@@ -946,22 +946,23 @@ if SERVER then
 	end)
 
 	hook.Add("DoAnimationEvent", "pk_pill_triggerAnims", function(ply, event, data)
-		if IsValid(getMappedEnt(ply)) and getMappedEnt(ply).formTable.type == "ply" then
-			if event == PLAYERANIMEVENT_JUMP then
-				getMappedEnt(ply):PillAnim("jump")
-				getMappedEnt(ply):DoJump()
+		local ent = getMappedEnt(ply)
+		if IsValid(ent) and ent.formTable.type == "ply" then
+			if event == PLAYERANIMEVENT_JUMP and not ent.nojump then
+				ent:PillAnim("jump")
+				ent:DoJump()
 			end
 
 			if event == PLAYERANIMEVENT_ATTACK_PRIMARY then
-				getMappedEnt(ply):PillGesture("attack")
+				ent:PillGesture("attack")
 			end
 
 			if event == PLAYERANIMEVENT_ATTACK_SECONDARY then
-				getMappedEnt(ply):PillGesture("attack2")
+				ent:PillGesture("attack2")
 			end
 
 			if event == PLAYERANIMEVENT_RELOAD then
-				getMappedEnt(ply):PillGesture("reload")
+				ent:PillGesture("reload")
 			end
 		end
 	end)
