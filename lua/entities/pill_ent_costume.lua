@@ -324,7 +324,7 @@ function ENT:Think()
             ply:SetRunSpeed(ply:GetWalkSpeed() / 2)
             self.plyFrozen = true
         elseif not self.animFreeze and self.plyFrozen then
-            local speed = self.pillspeed or {}
+            local speed = self.pillspeed or self.formTable.moveSpeed or {}
             ply:SetWalkSpeed(speed.walk or 200)
             ply:SetRunSpeed(speed.run or speed.walk or 500)
             self.plyFrozen = nil
