@@ -56,7 +56,8 @@ function ENT:Initialize()
         ply:SetStepSize(hull.z / 4)
         ply:SetViewOffset(camOffset)
         ply:SetViewOffsetDucked(camOffset - Vector(0, 0, duckBy))
-        local speed = self.formTable.moveSpeed or {}
+        self.pillspeed = self.formTable.moveSpeed or {}
+        local speed = self.pillspeed
         ply:SetWalkSpeed(speed.walk or 200)
         ply:SetRunSpeed(speed.run or speed.walk or 500)
 
@@ -323,7 +324,7 @@ function ENT:Think()
             ply:SetRunSpeed(ply:GetWalkSpeed() / 2)
             self.plyFrozen = true
         elseif not self.animFreeze and self.plyFrozen then
-            local speed = self.formTable.moveSpeed or {}
+            local speed = self.pillspeed or self.formTable.moveSpeed or {}
             ply:SetWalkSpeed(speed.walk or 200)
             ply:SetRunSpeed(speed.run or speed.walk or 500)
             self.plyFrozen = nil
