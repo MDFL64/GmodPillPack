@@ -604,6 +604,7 @@ else
 		local filtered = net.ReadEntity()
 
 		if IsValid(pill) and IsValid(filtered) then
+			if not pill.camTraceFilter then pill.camTraceFilter = {} end
 			table.insert(pill.camTraceFilter, filtered)
 		end
 	end)
