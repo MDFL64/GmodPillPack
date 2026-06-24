@@ -639,6 +639,7 @@ if SERVER then
 		t = forms[name]
 
 		if not t then
+			if not name then name = "nil value" end
 			errorMsg("Player '" .. ply:Name() .. "' attempted to use nonexistent pill '" .. name .. "'.")
 			ply:PrintMessage(HUD_PRINTCONSOLE, "Attempted to use nonexistent pill '" .. name .. "'.")
 
